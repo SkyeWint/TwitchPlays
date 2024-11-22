@@ -13,6 +13,8 @@ py -m pip install pygame
 py -m pip install tk  
 py -m pip install mutagen
 
+Note: Audio files such as meow1 to meow17 mp3 files are not included in the repository.
+
 
 Once Python is set up, simply change the Twitch username (or Youtube channel ID) in TwitchPlays_Main.py, and you SHOULD be ready to go.
 
