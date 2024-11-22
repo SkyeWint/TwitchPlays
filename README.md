@@ -11,7 +11,7 @@ py -m pip install pynput
 py -m pip install requests    
 py -m pip install pygame  
 py -m pip install tk  
-py -m pip install mutagen.mp3
+py -m pip install mutagen
 
 
 Once Python is set up, simply change the Twitch username (or Youtube channel ID) in TwitchPlays_Main.py, and you SHOULD be ready to go.
