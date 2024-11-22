@@ -4,11 +4,15 @@ These are the Python files I use that allows Twitch Chat or Youtube Chat to cont
 To run the code you will need to install Python 3.13.0.  
 Additionally, you will need to install the following python modules using Pip:  
 py -m pip install keyboard  
-py -m pip install pydirectinput
-py -m pip install pydirectinput-rgx
+py -m pip install pydirectinput  
+py -m pip install pydirectinput-rgx  
 py -m pip install pyautogui  
 py -m pip install pynput  
-py -m pip install requests  
+py -m pip install requests    
+py -m pip install pygame  
+py -m pip install tk  
+py -m pip install mutagen.mp3
+
 
 Once Python is set up, simply change the Twitch username (or Youtube channel ID) in TwitchPlays_Main.py, and you SHOULD be ready to go.
 
