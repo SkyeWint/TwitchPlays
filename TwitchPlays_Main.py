@@ -17,6 +17,7 @@ import keyboard
 import TwitchPlays_Audio as Audio_Handler
 import TwitchPlays_RainWorld as RainWorld_Handler
 import TwitchPlays_MiniGolf as MiniGolf_Handler
+import TwitchPlays_TTS as TTS_Handler
 
 
 ##################### GAME VARIABLES #####################
@@ -62,7 +63,8 @@ PAUSED = False
 LAST_MESSAGE = ""
 
 # Constants or set during initialization.
-Audio_Mode = False
+Audio_Mode_Active = False
+TTS_Mode_Active = False
 Game_Modes = ["nothing","minigolf","rain_world"]
 Current_Game = 0
 
@@ -70,14 +72,30 @@ Current_Game = 0
 ##################### INITIALIZATION #####################
 
 while True:
-    print("Do you want the audio player turned on? Y/n")
+    print("Do you want sound effects turned on? Y/n")
     selection = input()
     if selection.lower() == "y":
-        Audio_Mode = True
+        Audio_Mode_Active = True
         Audio_Handler.init()
         break
     elif selection.lower() == "n":
-        Audio_Mode = False
+        Audio_Mode_Active = False
+        break
+    else:
+        print("Invalid response.\n\n")
+
+print("\n\n")
+
+while True:
+    print("Do you want TTS turned on? Y/n")
+    selection = input()
+    if selection.lower() == "y":
+        TTS_Mode_Active = True
+        if not Audio_Mode_Active:
+            Audio_Handler.init()
+        break
+    elif selection.lower() == "n":
+        TTS_Mode_Active = False
         break
     else:
         print("Invalid response.\n\n")
@@ -135,23 +153,22 @@ def handle_message(message):
         print("Got this message from " + username + ": " + msg)
 
 
-        ### Prevent messages from being processed if script is paused.
-        if PAUSED == True:
-            return
 
-
-        if Game_Modes[Current_Game] == "minigolf" and not commands_locked:
+        if Game_Modes[Current_Game] == "minigolf" and not commands_locked and not PAUSED:
 
             commands_locked = MiniGolf_Handler.handle_message(msg, username, LAST_MESSAGE)
 
-        elif Game_Modes[Current_Game] == "rain_world" and not commands_locked:
+        elif Game_Modes[Current_Game] == "rain_world" and not commands_locked and not PAUSED:
 
             commands_locked = RainWorld_Handler.handle_message(msg, username, LAST_MESSAGE)
 
 
         ### Separated from game modes to prevent multiple effects on one command.
-        if Audio_Mode == True and not commands_locked:
+        if Audio_Mode_Active and not commands_locked:
             commands_locked = Audio_Handler.handle_message(msg, username, LAST_MESSAGE)
+
+        if TTS_Mode_Active and not commands_locked:
+            TTS_Handler.handle_message(msg, username)
 
 
         LAST_MESSAGE = msg
@@ -171,7 +188,7 @@ while True:
 
     if Game_Modes[Current_Game] == "minigolf":
         MiniGolf_Handler.move_mouse()
-    if Audio_Mode == True:
+    if Audio_Mode_Active == True:
         Audio_Handler.update()
 
 
@@ -211,6 +228,9 @@ while True:
     if keyboard.is_pressed('q') and PAUSED == True:
         print("Continuing.")
         PAUSED = False
+
+    if keyboard.is_pressed('backspace'):
+        Audio_Handler.stop_sound()
 
 
     # If user presses Shift+Backspace, automatically end the program

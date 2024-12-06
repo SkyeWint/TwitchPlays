@@ -21,7 +21,7 @@ def meow(user):
     
     meow_length = random.uniform(0.05, 1.0)
     HoldAndReleaseKey(M, meow_length)
-    print(user + " meowed for " + meow_length + " seconds")
+    print(user + " meowed for " + str(meow_length)[:4] + " seconds")
 
 
 
@@ -46,7 +46,7 @@ def handle_message(orig_msg, orig_user, last_message):
         ###### CHECK MESSAGE AGAINST VIABLE COMMANDS ######
 
         if msg in ["meow", "mrow", "mrowr"] and not last_message in ["meow", "mrow", "mrowr"]: 
-            meow()
+            meow(user)
             executed_command = True
         else:
             print("Invalid or repeat command.")

@@ -167,8 +167,8 @@ def handle_message(orig_msg, orig_user, last_message):
 
             executed_command = True
 
-        if msg == "target" and ADJUSTING_POWER != True:
-            print("targeted, now adjusting power")
+        if msg == "target lock" and ADJUSTING_POWER != True:
+            print("target locked, now adjusting power")
             reset_vectors()     # Vectors are reset here to prevent aiming from carrying over to power adjustment.
             ADJUSTING_POWER = True
             pydirectinput.mouseDown()   # Left mouse button must be held down to adjust power in "Golf It" and "Golf With Your Friends".
