@@ -8,11 +8,11 @@ py -m pip install pydirectinput
 py -m pip install pydirectinput-rgx  
 py -m pip install pyautogui  
 py -m pip install pynput  
-py -m pip install requests    
+py -m pip install requests  
 py -m pip install pygame  
-py -m pip install tk
-py -m pip install gtts
-py -m pip install pyttsx3
+py -m pip install tk  
+py -m pip install gtts  
+py -m pip install pyttsx3  
 
 
 Note: Audio files are included in the repository and are obtained from free sources under a creative commons 0 license, requiring no accredation or royalties.
