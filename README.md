@@ -10,11 +10,12 @@ py -m pip install pyautogui
 py -m pip install pynput  
 py -m pip install requests    
 py -m pip install pygame  
-py -m pip install tk  
-py -m pip install mutagen
+py -m pip install tk
+py -m pip install gtts
+py -m pip install pyttsx3
 
-Note: Audio files such as meow1 to meow17 mp3 files are not included in the repository.
 
+Note: Audio files are included in the repository and are obtained from free sources under a creative commons 0 license, requiring no accredation or royalties.
 
 Once Python is set up, simply change the Twitch username (or Youtube channel ID) in TwitchPlays_Main.py, and you SHOULD be ready to go.
 
