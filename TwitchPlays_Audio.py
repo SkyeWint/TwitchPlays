@@ -16,6 +16,9 @@ from tkinter import *
 import time
 
 
+from TwitchPlays_TTS import next_TTS_message
+from TwitchPlays_TTS import message_in_queue
+
 
 ##################### GENERAL PURPOSE DEFINITIONS & INITIALIZATION #####################
 
@@ -38,6 +41,9 @@ def init():
 ## Defining general use functions.
 
 def play_sound(sound_path, volume = 1):
+    if sound_path == None:
+        return
+
     pygame.mixer.music.load(sound_path)
     pygame.mixer.music.set_volume(volume)
     pygame.mixer.music.play()
@@ -107,7 +113,8 @@ def handle_message(orig_msg, orig_user, last_message):
 
 
         if msg in ["bonk", "bap"] and not last_message in ["bonk", "bap"]:
-            play_sound(".\\sounds\\bonk.mp3")
+            play_sound(".\\sounds\\bonk.wav")
+            executed_command = True
 
 
 
@@ -126,6 +133,10 @@ def handle_message(orig_msg, orig_user, last_message):
 def update():
 
     ROOT.update()
+
+    if message_in_queue and not is_playing_sound():
+        play_sound(next_TTS_message())
+
 
 
 def quit():

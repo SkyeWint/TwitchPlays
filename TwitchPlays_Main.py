@@ -93,6 +93,7 @@ while True:
         TTS_Mode_Active = True
         if not Audio_Mode_Active:
             Audio_Handler.init()
+        TTS_Handler.init()
         break
     elif selection.lower() == "n":
         TTS_Mode_Active = False
@@ -188,7 +189,8 @@ while True:
 
     if Game_Modes[Current_Game] == "minigolf":
         MiniGolf_Handler.move_mouse()
-    if Audio_Mode_Active == True:
+        
+    if Audio_Mode_Active or TTS_Mode_Active:
         Audio_Handler.update()
 
 
@@ -235,6 +237,7 @@ while True:
 
     # If user presses Shift+Backspace, automatically end the program
     if keyboard.is_pressed('shift+backspace'):
+        TTS_Handler.quit()
         Audio_Handler.quit()
         exit()
 
@@ -250,3 +253,7 @@ while True:
             else:
                 print(f'WARNING: active tasks ({len(active_tasks)}) exceeds number of workers ({MAX_WORKERS}). ({len(message_queue)} messages in the queue)')
     
+
+
+###
+# Set up a queue system so text to speech messages aren't lost, generally.
