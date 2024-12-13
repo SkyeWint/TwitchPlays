@@ -1,8 +1,8 @@
 # TwitchPlays
 These are the Python files I use that allows Twitch Chat or Youtube Chat to control your keyboard or mouse to play a game. You are welcome to use or adapt this code for your own content.
 
-To run the code you will need to install Python 3.13.0.  
-Additionally, you will need to install the following python modules using Pip:  
+To run the code you will need to install Python 3.13.0. Run the code by opening TwitchPlays_Main with Python directly, or inside a dev environment such as vscode with Python installed.
+Additionally, you will need to install the following python modules using Pip (https://pip.pypa.io/en/stable/getting-started/):  
 py -m pip install keyboard  
 py -m pip install pydirectinput  
 py -m pip install pydirectinput-rgx  

@@ -12,9 +12,6 @@ import queue
 # Generating TTS files.
 from gtts import gTTS
 
-# Currently broken
-# from pydub import AudioSegment
-
 import pyttsx3
 
 
@@ -35,9 +32,6 @@ def init():
 
     pyTTS = pyttsx3.init()
 
-### Currently broken due to pydub being broken
-""" def mp3_to_wav(orig, target):
-    None """
 
 def generate_gTTS(msg, slow = False, filename = "speech"):
 
@@ -48,9 +42,12 @@ def generate_gTTS(msg, slow = False, filename = "speech"):
 
     return file
 
+
 def generate_pyTTS(msg, voice = random.randint(0,1), rate = 200, filename = "speech"):
     pyTTS_voices = pyTTS.getProperty('voices')
     file = ".\\sounds\\" + filename + ".wav"
+
+    rate += int(len(msg) / 2)
 
     pyTTS.setProperty("voice", pyTTS_voices[voice].id)
     pyTTS.setProperty("rate", rate)
@@ -60,6 +57,7 @@ def generate_pyTTS(msg, voice = random.randint(0,1), rate = 200, filename = "spe
     pyTTS.runAndWait()
 
     return file
+
 
 def clear_speech_files():
     Audio_Handler.load_empty()
@@ -127,7 +125,7 @@ def next_TTS_message(): # Creates TTS file and returns the relative file path.
     else: 
         clear_speech_files()
         
-        rate = int((math.sqrt(messages_left) + 0.5) * 200)
+        rate = int((math.sqrt(messages_left + 3) - 1) * 100)
     
         voice_selector = str.lower(msg)
 

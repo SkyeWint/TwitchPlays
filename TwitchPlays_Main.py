@@ -72,47 +72,53 @@ Current_Game = 0
 ##################### INITIALIZATION #####################
 
 while True:
-    print("Do you want sound effects turned on? Y/n")
+    print("Do you want sound effects turned on? [y]/n")
     selection = input()
-    if selection.lower() == "y":
-        Audio_Mode_Active = True
-        Audio_Handler.init()
-        break
-    elif selection.lower() == "n":
+    if selection.lower() == "n":
         Audio_Mode_Active = False
+        print("Sound effects will be turned off.\n\n")
         break
     else:
-        print("Invalid response.\n\n")
+        Audio_Mode_Active = True
+        Audio_Handler.init()
+        print("Sound effects will be turned on.\n\n")
+        break
 
 print("\n\n")
 
 while True:
-    print("Do you want TTS turned on? Y/n")
+    print("Do you want TTS turned on? [y]/n")
     selection = input()
-    if selection.lower() == "y":
+    if selection.lower() == "n":
+        TTS_Mode_Active = False
+        print("TTS will be turned off.\n\n")
+        break
+    else:
         TTS_Mode_Active = True
         if not Audio_Mode_Active:
             Audio_Handler.init()
         TTS_Handler.init()
+        print("TTS will be turned on.\n\n")
         break
-    elif selection.lower() == "n":
-        TTS_Mode_Active = False
-        break
-    else:
-        print("Invalid response.\n\n")
 
 print("\n\n")
  
 while True:
     print("What game are we playing today?")
-    print("0 = No game.")
+    print("[0] = No game.")
     print("1 = Mini Golf")
     print("2 = Rain World")
 
     selection = input()
-    if int(selection) <= len(Game_Modes):
-        Current_Game = int(selection)
+    try:
+        int(selection)
+    except:
+        Current_game = 0
         break
+    else:
+        if int(selection) <= len(Game_Modes):
+            Current_Game = int(selection)
+            break
     
     
     ## If selection does not exist in the possible game modes, request input again.
@@ -187,7 +193,7 @@ def handle_message(message):
 
 while True:
 
-    if Game_Modes[Current_Game] == "minigolf":
+    if not PAUSED and Game_Modes[Current_Game] == "minigolf":
         MiniGolf_Handler.move_mouse()
         
     if Audio_Mode_Active or TTS_Mode_Active:
@@ -223,11 +229,11 @@ while True:
     ##################### USER INPUT HANDLING #####################
 
     # If user presses Shift+P, ignore all messages until "q" is pressed.
-    if keyboard.is_pressed('shift+p') and PAUSED == False:
+    if keyboard.is_pressed('shift+p') and not PAUSED:
         print("Please press q to continue.")
         PAUSED = True
 
-    if keyboard.is_pressed('q') and PAUSED == True:
+    if keyboard.is_pressed('q') and PAUSED:
         print("Continuing.")
         PAUSED = False
 
@@ -237,8 +243,10 @@ while True:
 
     # If user presses Shift+Backspace, automatically end the program
     if keyboard.is_pressed('shift+backspace'):
-        TTS_Handler.quit()
-        Audio_Handler.quit()
+        if TTS_Mode_Active:
+            TTS_Handler.quit()
+        if Audio_Mode_Active or TTS_Mode_Active:
+            Audio_Handler.quit()
         exit()
 
 
@@ -252,6 +260,9 @@ while True:
                 active_tasks.append(thread_pool.submit(handle_message, message))
             else:
                 print(f'WARNING: active tasks ({len(active_tasks)}) exceeds number of workers ({MAX_WORKERS}). ({len(message_queue)} messages in the queue)')
+
+
+    time.sleep(0.005)
     
 
 

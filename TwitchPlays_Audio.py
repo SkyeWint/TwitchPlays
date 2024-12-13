@@ -134,7 +134,7 @@ def update():
 
     ROOT.update()
 
-    if message_in_queue and not is_playing_sound():
+    if message_in_queue() and not is_playing_sound():
         play_sound(next_TTS_message())
 
 
